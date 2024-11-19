@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "964972766610",
+    "project_id": "kmd-yoga-app",
+    "storage_bucket": "kmd-yoga-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964972766610:android:e14450ccae440d598ecd4b",
+        "android_client_info": {
+          "package_name": "com.example.yogaapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbUmxDS8eMq1Hdezhc_kOKDPDDsnQkFHU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964972766610:android:9e7018d20c1ee6048ecd4b",
+        "android_client_info": {
+          "package_name": "com.kmd.yogaappcustomer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbUmxDS8eMq1Hdezhc_kOKDPDDsnQkFHU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

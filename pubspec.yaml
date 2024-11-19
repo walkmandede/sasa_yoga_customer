@@ -1,0 +1,33 @@
+name: yogaappcustomer
+description: "Customer app for the universal yoga project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  shared_preferences:
+  intl:
+  flutter_svg: ^2.0.9
+  cached_network_image:
+  firebase_core:
+  cloud_firestore:
+  google_fonts:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/

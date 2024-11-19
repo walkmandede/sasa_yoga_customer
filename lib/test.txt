@@ -1,0 +1,32 @@
+
+[
+  {
+    "id": 1,
+    "courseId": 101,
+    "participantId": "user123",
+    "bookingDate": "2024-11-19T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "courseId": 102,
+    "participantId": "user456",
+    "bookingDate": "2024-11-20T12:00:00Z"
+  },
+  {
+    "id": 3,
+    "courseId": 103,
+    "participantId": "user789",
+    "bookingDate": "2024-11-21T08:30:00Z"
+  },
+  {
+    "id": 4,
+    "courseId": 104,
+    "participantId": "user123",
+    "bookingDate": "2024-11-22T14:00:00Z"
+  },
+  {
+    "courseId": 105,
+    "participantId": "user456",
+    "bookingDate": "2024-11-23T16:00:00Z"
+  }
+]
