@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:yogaappcustomer/constants/my_assets_path.dart';
 import 'package:yogaappcustomer/constants/my_colors.dart';
 import 'package:yogaappcustomer/constants/my_constants.dart';
+import 'package:yogaappcustomer/constants/my_functions.dart';
 import 'package:yogaappcustomer/constants/my_svg_data.dart';
 import 'package:yogaappcustomer/controllers/data_controller.dart';
 import 'package:yogaappcustomer/utils/dialog_service.dart';
@@ -25,8 +26,10 @@ class _ProfilePageState extends State<ProfilePage> {
     DialogService().showConfirmDialog(
       context: context,
       label: "Are you sure to logout?",
-      onClickYes: () {
-        Navigator.pushReplacementNamed(context, RouteUtils.loginPage);
+      onClickYes: () async{
+        await Future.delayed(const Duration(milliseconds: 100));
+        Navigator.pushNamedAndRemoveUntil(context, RouteUtils.loginPage,(route) => false,);
+        superPrint(Navigator.defaultRouteName);
       },
       yesBg: MyColors.redDanger
     );

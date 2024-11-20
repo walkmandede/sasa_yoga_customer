@@ -192,7 +192,7 @@ class _ClassesPageState extends State<ClassesPage> {
                             style: GoogleFonts.lato(
                               color: MyColors.text2,
                               fontWeight: FontWeight.normal,
-                              fontSize: MyConstants.baseFontSizeXL
+                              fontSize: MyConstants.baseFontSizeL
                             ),
                           ),
                         )
