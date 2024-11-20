@@ -105,6 +105,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _coursesWidget(){
+    final featuredCourse = allCourses.where((element) => element.isFeatured,).toList();
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -145,7 +146,7 @@ class _HomePageState extends State<HomePage> {
             aspectRatio: 390/280,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: allCourses.length,
+              itemCount: featuredCourse.length,
               separatorBuilder: (context, index) {
                 return const SizedBox(width: MyConstants.basePadding,);
               },
@@ -153,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                 horizontal: MyConstants.basePadding
               ),
               itemBuilder: (context, index) {
-                final eachModel = allCourses[index];
+                final eachModel = featuredCourse[index];
                 return InkWell(
                   onTap: () {
                     DataController dataController = DataController();

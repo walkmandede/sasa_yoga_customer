@@ -10,7 +10,9 @@ import 'package:yogaappcustomer/models/class_model.dart';
 import 'package:yogaappcustomer/models/course_model.dart';
 import 'package:intl/intl.dart';
 
+import '../controllers/data_controller.dart';
 import '../utils/firebase_services.dart';
+import '../utils/route_utils.dart';
 
 class CoursesPage extends StatefulWidget {
   const CoursesPage({super.key});
@@ -121,135 +123,142 @@ class _CoursesPageState extends State<CoursesPage> {
                 ),
                 itemBuilder: (context, index) {
                   final eachModel = featuredCourses[index];
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(MyConstants.baseBorderRadius),
-                    child: AspectRatio(
-                      aspectRatio: 240/287,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            flex: 5,
-                            child: Image.asset(
-                              eachModel.getImagePath(),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: DecoratedBox(
-                              decoration: const BoxDecoration(
-                                  color: MyColors.bgWhite
+                  return InkWell(
+                    onTap: () {
+                      DataController dataController = DataController();
+                      dataController.currentCourse = eachModel;
+                      Navigator.pushNamed(context, RouteUtils.courseDetailPage);
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(MyConstants.baseBorderRadius),
+                      child: AspectRatio(
+                        aspectRatio: 240/287,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              flex: 5,
+                              child: Image.asset(
+                                eachModel.getImagePath(),
+                                fit: BoxFit.cover,
                               ),
-                              child: SizedBox.expand(
-                                child: LayoutBuilder(
-                                  builder: (a1, c1) {
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: c1.maxWidth * 0.05,
-                                          vertical: c1.maxHeight * 0.1
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    eachModel.courseName,
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: DecoratedBox(
+                                decoration: const BoxDecoration(
+                                    color: MyColors.bgWhite
+                                ),
+                                child: SizedBox.expand(
+                                  child: LayoutBuilder(
+                                    builder: (a1, c1) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: c1.maxWidth * 0.05,
+                                            vertical: c1.maxHeight * 0.1
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      eachModel.courseName,
+                                                      style: GoogleFonts.lato(
+                                                          fontSize: MyConstants.baseFontSizeL,
+                                                          fontWeight: FontWeight.w600,
+                                                          color: MyColors.text1
+                                                      ),
+                                                      maxLines: 1,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    eachModel.getPriceLabel(),
                                                     style: GoogleFonts.lato(
-                                                        fontSize: MyConstants.baseFontSizeL,
+                                                        fontSize: MyConstants.baseFontSizeXL,
                                                         fontWeight: FontWeight.w600,
+                                                        color: MyColors.primary
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  eachModel.days,
+                                                  style: GoogleFonts.lato(
+                                                      fontSize: MyConstants.baseFontSizeL,
+                                                      fontWeight: FontWeight.normal,
+                                                      color: MyColors.text1
+                                                  ),
+                                                  maxLines: 1,
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Row(
+                                                children: [
+                                                  SvgPicture.string(
+                                                    MySvgData.people,
+                                                    colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
+                                                  ),
+                                                  SizedBox(width: c1.maxWidth *0.025,),
+                                                  Text(
+                                                    eachModel.capacity.toString(),
+                                                    style: GoogleFonts.lato(
+                                                        fontSize: MyConstants.baseFontSizeM,
+                                                        fontWeight: FontWeight.normal,
                                                         color: MyColors.text1
                                                     ),
                                                     maxLines: 1,
                                                   ),
-                                                ),
-                                                Text(
-                                                  eachModel.getPriceLabel(),
-                                                  style: GoogleFonts.lato(
-                                                      fontSize: MyConstants.baseFontSizeXL,
-                                                      fontWeight: FontWeight.w600,
-                                                      color: MyColors.primary
+                                                  SizedBox(width: c1.maxWidth *0.05,),
+                                                  SvgPicture.string(
+                                                    MySvgData.clock,
+                                                    colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                eachModel.days,
-                                                style: GoogleFonts.lato(
-                                                    fontSize: MyConstants.baseFontSizeL,
-                                                    fontWeight: FontWeight.normal,
-                                                    color: MyColors.text1
-                                                ),
-                                                maxLines: 1,
+                                                  SizedBox(width: c1.maxWidth *0.025,),
+                                                  Text(
+                                                    eachModel.time,
+                                                    style: GoogleFonts.lato(
+                                                        fontSize: MyConstants.baseFontSizeM,
+                                                        fontWeight: FontWeight.normal,
+                                                        color: MyColors.text1
+                                                    ),
+                                                    maxLines: 1,
+                                                  ),
+                                                  SizedBox(width: c1.maxWidth *0.05,),
+                                                  SvgPicture.string(
+                                                    MySvgData.timer,
+                                                    colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
+                                                  ),
+                                                  SizedBox(width: c1.maxWidth *0.025,),
+                                                  Text(
+                                                    "${eachModel.duration}",
+                                                    style: GoogleFonts.lato(
+                                                        fontSize: MyConstants.baseFontSizeM,
+                                                        fontWeight: FontWeight.normal,
+                                                        color: MyColors.text1
+                                                    ),
+                                                    maxLines: 1,
+                                                  ),
+                                                  SizedBox(width: c1.maxWidth *0.05,),
+                                                ],
                                               ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                SvgPicture.string(
-                                                  MySvgData.people,
-                                                  colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
-                                                ),
-                                                SizedBox(width: c1.maxWidth *0.025,),
-                                                Text(
-                                                  eachModel.capacity.toString(),
-                                                  style: GoogleFonts.lato(
-                                                      fontSize: MyConstants.baseFontSizeM,
-                                                      fontWeight: FontWeight.normal,
-                                                      color: MyColors.text1
-                                                  ),
-                                                  maxLines: 1,
-                                                ),
-                                                SizedBox(width: c1.maxWidth *0.05,),
-                                                SvgPicture.string(
-                                                  MySvgData.clock,
-                                                  colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
-                                                ),
-                                                SizedBox(width: c1.maxWidth *0.025,),
-                                                Text(
-                                                  eachModel.time,
-                                                  style: GoogleFonts.lato(
-                                                      fontSize: MyConstants.baseFontSizeM,
-                                                      fontWeight: FontWeight.normal,
-                                                      color: MyColors.text1
-                                                  ),
-                                                  maxLines: 1,
-                                                ),
-                                                SizedBox(width: c1.maxWidth *0.05,),
-                                                SvgPicture.string(
-                                                  MySvgData.timer,
-                                                  colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
-                                                ),
-                                                SizedBox(width: c1.maxWidth *0.025,),
-                                                Text(
-                                                  "${eachModel.duration}",
-                                                  style: GoogleFonts.lato(
-                                                      fontSize: MyConstants.baseFontSizeM,
-                                                      fontWeight: FontWeight.normal,
-                                                      color: MyColors.text1
-                                                  ),
-                                                  maxLines: 1,
-                                                ),
-                                                SizedBox(width: c1.maxWidth *0.05,),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -278,141 +287,148 @@ class _CoursesPageState extends State<CoursesPage> {
           children: [
             ...nonFeaturedCourses.map(
               (eachCourse) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: MyConstants.basePadding
-                  ),
-                  child: AspectRatio(
-                    aspectRatio: 358/99,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: MyColors.bgWhite,
-                        borderRadius: BorderRadius.circular(MyConstants.baseBorderRadius)
-                      ),
-                      child: LayoutBuilder(
-                        builder: (a1, c1) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: c1.maxHeight * 0.1,
-                              vertical: c1.maxHeight * 0.1
-                            ),
-                            child: Row(
-                              children: [
-                                AspectRatio(
-                                  aspectRatio: 1,
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(eachCourse.getImagePath()),
-                                        fit: BoxFit.cover
+                return InkWell(
+                  onTap: () {
+                    DataController dataController = DataController();
+                    dataController.currentCourse = eachCourse;
+                    Navigator.pushNamed(context, RouteUtils.courseDetailPage);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: MyConstants.basePadding
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 358/99,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: MyColors.bgWhite,
+                          borderRadius: BorderRadius.circular(MyConstants.baseBorderRadius)
+                        ),
+                        child: LayoutBuilder(
+                          builder: (a1, c1) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: c1.maxHeight * 0.1,
+                                vertical: c1.maxHeight * 0.1
+                              ),
+                              child: Row(
+                                children: [
+                                  AspectRatio(
+                                    aspectRatio: 1,
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage(eachCourse.getImagePath()),
+                                          fit: BoxFit.cover
+                                        ),
+                                        borderRadius: BorderRadius.circular(MyConstants.baseBorderRadius)
                                       ),
-                                      borderRadius: BorderRadius.circular(MyConstants.baseBorderRadius)
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: c1.maxWidth * 0.05,),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                eachCourse.days,
+                                  SizedBox(width: c1.maxWidth * 0.05,),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  eachCourse.days,
+                                                  style: GoogleFonts.lato(
+                                                    color: MyColors.text1,
+                                                    fontSize: MyConstants.baseFontSizeM,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                  maxLines: 1,
+                                                ),
+                                              ),
+                                              Text(
+                                                eachCourse.getPriceLabel(),
                                                 style: GoogleFonts.lato(
-                                                  color: MyColors.text1,
-                                                  fontSize: MyConstants.baseFontSizeM,
-                                                  fontWeight: FontWeight.w300,
+                                                  color: MyColors.primary,
+                                                  fontSize: MyConstants.baseFontSizeL,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                                 maxLines: 1,
-                                              ),
-                                            ),
-                                            Text(
-                                              eachCourse.getPriceLabel(),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              eachCourse.courseName,
                                               style: GoogleFonts.lato(
-                                                color: MyColors.primary,
+                                                color: MyColors.text1,
                                                 fontSize: MyConstants.baseFontSizeL,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                               maxLines: 1,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            eachCourse.courseName,
-                                            style: GoogleFonts.lato(
-                                              color: MyColors.text1,
-                                              fontSize: MyConstants.baseFontSizeL,
-                                              fontWeight: FontWeight.w600,
                                             ),
-                                            maxLines: 1,
                                           ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.string(
-                                              MySvgData.people,
-                                              colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
-                                            ),
-                                            SizedBox(width: c1.maxWidth *0.015,),
-                                            Text(
-                                              eachCourse.capacity.toString(),
-                                              style: GoogleFonts.lato(
-                                                  fontSize: MyConstants.baseFontSizeM,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: MyColors.text1
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.string(
+                                                MySvgData.people,
+                                                colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
                                               ),
-                                              maxLines: 1,
-                                            ),
-                                            SizedBox(width: c1.maxWidth *0.025,),
-                                            SvgPicture.string(
-                                              MySvgData.clock,
-                                              colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
-                                            ),
-                                            SizedBox(width: c1.maxWidth *0.015,),
-                                            Text(
-                                              eachCourse.time,
-                                              style: GoogleFonts.lato(
-                                                  fontSize: MyConstants.baseFontSizeM,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: MyColors.text1
+                                              SizedBox(width: c1.maxWidth *0.015,),
+                                              Text(
+                                                eachCourse.capacity.toString(),
+                                                style: GoogleFonts.lato(
+                                                    fontSize: MyConstants.baseFontSizeM,
+                                                    fontWeight: FontWeight.normal,
+                                                    color: MyColors.text1
+                                                ),
+                                                maxLines: 1,
                                               ),
-                                              maxLines: 1,
-                                            ),
-                                            SizedBox(width: c1.maxWidth *0.025,),
-                                            SvgPicture.string(
-                                              MySvgData.timer,
-                                              colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
-                                            ),
-                                            SizedBox(width: c1.maxWidth *0.015,),
-                                            Text(
-                                              "${eachCourse.duration}",
-                                              style: GoogleFonts.lato(
-                                                  fontSize: MyConstants.baseFontSizeM,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: MyColors.text1
+                                              SizedBox(width: c1.maxWidth *0.025,),
+                                              SvgPicture.string(
+                                                MySvgData.clock,
+                                                colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
                                               ),
-                                              maxLines: 1,
-                                            ),
-                                            SizedBox(width: c1.maxWidth *0.05,),
-                                          ],
+                                              SizedBox(width: c1.maxWidth *0.015,),
+                                              Text(
+                                                eachCourse.time,
+                                                style: GoogleFonts.lato(
+                                                    fontSize: MyConstants.baseFontSizeM,
+                                                    fontWeight: FontWeight.normal,
+                                                    color: MyColors.text1
+                                                ),
+                                                maxLines: 1,
+                                              ),
+                                              SizedBox(width: c1.maxWidth *0.025,),
+                                              SvgPicture.string(
+                                                MySvgData.timer,
+                                                colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
+                                              ),
+                                              SizedBox(width: c1.maxWidth *0.015,),
+                                              Text(
+                                                "${eachCourse.duration}",
+                                                style: GoogleFonts.lato(
+                                                    fontSize: MyConstants.baseFontSizeM,
+                                                    fontWeight: FontWeight.normal,
+                                                    color: MyColors.text1
+                                                ),
+                                                maxLines: 1,
+                                              ),
+                                              SizedBox(width: c1.maxWidth *0.05,),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        },
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
