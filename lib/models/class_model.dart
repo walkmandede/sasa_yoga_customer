@@ -1,5 +1,6 @@
 import 'package:yogaappcustomer/constants/my_assets_path.dart';
 import 'package:yogaappcustomer/constants/my_functions.dart';
+import 'package:yogaappcustomer/models/course_model.dart';
 
 class ClassModel{
   String id;
@@ -43,6 +44,10 @@ class ClassModel{
     }
 
     return words.first[0].toUpperCase();
+  }
+
+  CourseModel? getCourseModel({required List<CourseModel> courses}){
+    return courses.where((element) => element.id.toString() == courseId.toString(),).firstOrNull;
   }
 
 }

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:yogaappcustomer/constants/my_functions.dart';
 import 'package:yogaappcustomer/controllers/cart_controller.dart';
 import 'package:yogaappcustomer/models/class_model.dart';
+import 'package:yogaappcustomer/models/course_model.dart';
 
 import '../../constants/my_colors.dart';
 import '../../constants/my_constants.dart';
@@ -13,7 +14,8 @@ import '../../constants/my_svg_data.dart';
 class EachClassWidget1 extends StatelessWidget {
   final ClassModel eachClass;
   final bool isCartButtonIncluded;
-  const EachClassWidget1({super.key,required this.eachClass,this.isCartButtonIncluded = true});
+  final CourseModel? courseModel;
+  const EachClassWidget1({super.key,required this.eachClass,this.isCartButtonIncluded = true,required this.courseModel});
 
   @override
   Widget build(BuildContext context) {
@@ -73,29 +75,17 @@ class EachClassWidget1 extends StatelessWidget {
                               ),
                               const Expanded(flex: 1,child: SizedBox.shrink()),
                               Expanded(
-                                flex: 3,
-                                child: Row(
-                                  children: [
-                                    SvgPicture.string(
-                                      MySvgData.person,
-                                      colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
+                                flex: 4,
+                                child: FittedBox(
+                                  child: Text(
+                                    courseModel==null?"-":courseModel!.getPriceLabel(),
+                                    style: GoogleFonts.lato(
+                                        fontWeight: FontWeight.w600,
+                                        color: MyColors.primary,
+                                        fontSize: MyConstants.baseFontSizeS
                                     ),
-                                    SizedBox(width: baseWidth * 0.015,),
-                                    Expanded(
-                                      child: FittedBox(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          eachClass.teacherName,
-                                          style: GoogleFonts.lato(
-                                              fontSize: MyConstants.baseFontSizeS,
-                                              fontWeight: FontWeight.normal,
-                                              color: MyColors.text1
-                                          ),
-                                          maxLines: 1,
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                                    maxLines: 1,
+                                  ),
                                 ),
                               ),
                               const Expanded(flex: 1,child: SizedBox.shrink())
@@ -135,6 +125,27 @@ class EachClassWidget1 extends StatelessWidget {
                     ),
                     textAlign: TextAlign.left,
                     maxLines: 3,
+                  ),
+                  const SizedBox(height: MyConstants.basePadding*0.5,),
+                  Row(
+                    children: [
+                      SvgPicture.string(
+                        MySvgData.person,
+                        colorFilter: const ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
+                      ),
+                      SizedBox(width: baseWidth * 0.015,),
+                      Expanded(
+                        child: Text(
+                          eachClass.teacherName,
+                          style: GoogleFonts.lato(
+                              fontSize: MyConstants.baseFontSizeM,
+                              fontWeight: FontWeight.normal,
+                              color: MyColors.text1
+                          ),
+                          maxLines: 1,
+                        ),
+                      )
+                    ],
                   ),
                   const SizedBox(height: MyConstants.basePadding*0.7,),
                   DecoratedBox(

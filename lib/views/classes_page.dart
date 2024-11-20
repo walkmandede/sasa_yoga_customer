@@ -165,182 +165,188 @@ class _ClassesPageState extends State<ClassesPage> {
           return SizedBox(
             width: double.infinity,
             child: Padding(
-              padding: EdgeInsets.all(MyConstants.basePadding),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Filter",
-                          style: GoogleFonts.lato(
-                            fontSize: MyConstants.baseFontSizeXL,
-                            fontWeight: FontWeight.w600,
-                            color: MyColors.text1
-                          ),
-                        ),
-                        const Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Future.delayed(const Duration(milliseconds: 100)).then((value) => resetFilter(),);
-                          },
-                          child: Text(
-                            "Reset",
+              padding: const EdgeInsets.all(MyConstants.basePadding),
+              child: RefreshIndicator(
+                onRefresh: () async{
+                  resetFilter();
+                  await initLoad();
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "Filter",
                             style: GoogleFonts.lato(
-                              color: MyColors.text2,
-                              fontWeight: FontWeight.normal,
-                              fontSize: MyConstants.baseFontSizeL
+                              fontSize: MyConstants.baseFontSizeXL,
+                              fontWeight: FontWeight.w600,
+                              color: MyColors.text1
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 10,),
-                    Text(
-                      "Class date",
-                      style: GoogleFonts.lato(
-                          fontSize: MyConstants.baseFontSizeL,
-                          fontWeight: FontWeight.normal,
-                          color: MyColors.text1
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Future.delayed(const Duration(milliseconds: 100)).then((value) => resetFilter(),);
+                            },
+                            child: Text(
+                              "Reset",
+                              style: GoogleFonts.lato(
+                                color: MyColors.text2,
+                                fontWeight: FontWeight.normal,
+                                fontSize: MyConstants.baseFontSizeL
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        updateDate();
-                      },
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: MyConstants.baseButtonHeight,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              color: MyColors.textFieldBg,
-                              borderRadius: BorderRadius.circular(MyConstants.baseBorderRadiusS)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: MyConstants.baseButtonHeight * 0.25,
-                              vertical: MyConstants.baseButtonHeight * 0.2,
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: ValueListenableBuilder(
-                                    valueListenable: selectedDate,
-                                    builder: (context, selectedDate, child) {
-                                      return Text(
-                                        selectedDate==null?"Choose Date":DateFormat("MMM dd, yyyy").format(selectedDate),
-                                        style: GoogleFonts.lato(
-                                            color: MyColors.text1,
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: MyConstants.baseFontSizeL
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                SvgPicture.string(
-                                  MySvgData.calendar,
-                                  colorFilter: ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
-                                )
-                              ],
-                            ),
-                          ),
+                      const SizedBox(height: 10,),
+                      Text(
+                        "Class date",
+                        style: GoogleFonts.lato(
+                            fontSize: MyConstants.baseFontSizeL,
+                            fontWeight: FontWeight.normal,
+                            color: MyColors.text1
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20,),
-                    Text(
-                      "Courses",
-                      style: GoogleFonts.lato(
-                          fontSize: MyConstants.baseFontSizeL,
-                          fontWeight: FontWeight.normal,
-                          color: MyColors.text1
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        updateDate();
-                      },
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: MyConstants.baseButtonHeight,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              color: MyColors.textFieldBg,
-                              borderRadius: BorderRadius.circular(MyConstants.baseBorderRadiusS)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: MyConstants.baseButtonHeight * 0.25,
-                              // vertical: MyConstants.baseButtonHeight * 0.2,
+                      const SizedBox(height: 10,),
+                      InkWell(
+                        onTap: () {
+                          updateDate();
+                        },
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: MyConstants.baseButtonHeight,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                                color: MyColors.textFieldBg,
+                                borderRadius: BorderRadius.circular(MyConstants.baseBorderRadiusS)
                             ),
-                            child: ValueListenableBuilder(
-                              valueListenable: selectedCourse,
-                              builder: (context, selectedCourse, child) {
-                                return DropdownButton<CourseModel>(
-                                  onChanged: (value) {
-                                    updateCourse(courseModel: value);
-                                  },
-                                  underline: const SizedBox.shrink(),
-                                  isExpanded: true,
-                                  value: selectedCourse,
-                                  hint: Text(
-                                    "Choose Course",
-                                    style: GoogleFonts.lato(
-                                        fontWeight: FontWeight.normal,
-                                        color: MyColors.text1,
-                                        fontSize: MyConstants.baseFontSizeM
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: MyConstants.baseButtonHeight * 0.25,
+                                vertical: MyConstants.baseButtonHeight * 0.2,
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: ValueListenableBuilder(
+                                      valueListenable: selectedDate,
+                                      builder: (context, selectedDate, child) {
+                                        return Text(
+                                          selectedDate==null?"Choose Date":DateFormat("MMM dd, yyyy").format(selectedDate),
+                                          style: GoogleFonts.lato(
+                                              color: MyColors.text1,
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: MyConstants.baseFontSizeL
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
-                                  items: allCourses.map((eachCourse) {
-                                    return DropdownMenuItem(
-                                      value: eachCourse,
-                                      child: Text(
-                                        eachCourse.courseName,
-                                        style: GoogleFonts.lato(
-                                            fontWeight: FontWeight.normal,
-                                            color: MyColors.text1,
-                                            fontSize: MyConstants.baseFontSizeM
-                                        ),
-                                      ),
-                                    );
-                                  },).toList(),
-                                );
-                              },
+                                  SvgPicture.string(
+                                    MySvgData.calendar,
+                                    colorFilter: ColorFilter.mode(MyColors.text1, BlendMode.srcIn),
+                                  )
+                                ],
+                              ),
                             ),
-                            // child: Row(
-                            //   children: [
-                            //     Expanded(
-                            //       child: ValueListenableBuilder(
-                            //         valueListenable: selectedCourse,
-                            //         builder: (context, selectedCourse, child) {
-                            //           return Text(
-                            //             selectedCourse==null?"Choose Course":selectedCourse.courseName,
-                            //             style: GoogleFonts.lato(
-                            //                 color: MyColors.text1,
-                            //                 fontWeight: FontWeight.normal,
-                            //                 fontSize: MyConstants.baseFontSizeL
-                            //             ),
-                            //           );
-                            //         },
-                            //       ),
-                            //     ),
-                            //     Icon(
-                            //       Icons.keyboard_arrow_down_rounded,
-                            //       color: MyColors.text1,
-                            //     )
-                            //   ],
-                            // ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 20,),
+                      Text(
+                        "Courses",
+                        style: GoogleFonts.lato(
+                            fontSize: MyConstants.baseFontSizeL,
+                            fontWeight: FontWeight.normal,
+                            color: MyColors.text1
+                        ),
+                      ),
+                      const SizedBox(height: 10,),
+                      InkWell(
+                        onTap: () {
+                          updateDate();
+                        },
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: MyConstants.baseButtonHeight,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                                color: MyColors.textFieldBg,
+                                borderRadius: BorderRadius.circular(MyConstants.baseBorderRadiusS)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: MyConstants.baseButtonHeight * 0.25,
+                                // vertical: MyConstants.baseButtonHeight * 0.2,
+                              ),
+                              child: ValueListenableBuilder(
+                                valueListenable: selectedCourse,
+                                builder: (context, selectedCourse, child) {
+                                  return DropdownButton<CourseModel>(
+                                    onChanged: (value) {
+                                      updateCourse(courseModel: value);
+                                    },
+                                    underline: const SizedBox.shrink(),
+                                    isExpanded: true,
+                                    value: selectedCourse,
+                                    hint: Text(
+                                      "Choose Course",
+                                      style: GoogleFonts.lato(
+                                          fontWeight: FontWeight.normal,
+                                          color: MyColors.text1,
+                                          fontSize: MyConstants.baseFontSizeM
+                                      ),
+                                    ),
+                                    items: allCourses.map((eachCourse) {
+                                      return DropdownMenuItem(
+                                        value: eachCourse,
+                                        child: Text(
+                                          eachCourse.courseName,
+                                          style: GoogleFonts.lato(
+                                              fontWeight: FontWeight.normal,
+                                              color: MyColors.text1,
+                                              fontSize: MyConstants.baseFontSizeM
+                                          ),
+                                        ),
+                                      );
+                                    },).toList(),
+                                  );
+                                },
+                              ),
+                              // child: Row(
+                              //   children: [
+                              //     Expanded(
+                              //       child: ValueListenableBuilder(
+                              //         valueListenable: selectedCourse,
+                              //         builder: (context, selectedCourse, child) {
+                              //           return Text(
+                              //             selectedCourse==null?"Choose Course":selectedCourse.courseName,
+                              //             style: GoogleFonts.lato(
+                              //                 color: MyColors.text1,
+                              //                 fontWeight: FontWeight.normal,
+                              //                 fontSize: MyConstants.baseFontSizeL
+                              //             ),
+                              //           );
+                              //         },
+                              //       ),
+                              //     ),
+                              //     Icon(
+                              //       Icons.keyboard_arrow_down_rounded,
+                              //       color: MyColors.text1,
+                              //     )
+                              //   ],
+                              // ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -353,30 +359,25 @@ class _ClassesPageState extends State<ClassesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async{
-        await updateData();
-      },
-      child: Column(
-        children: [
-          _searchWidget(),
-          Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: isLoading,
-              builder: (context, isLoading, child) {
-                if(isLoading){
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                else{
-                  return _allClassesWidget();
-                }
-              },
-            ),
-          )
-        ],
-      ),
+    return Column(
+      children: [
+        _searchWidget(),
+        Expanded(
+          child: ValueListenableBuilder(
+            valueListenable: isLoading,
+            builder: (context, isLoading, child) {
+              if(isLoading){
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              else{
+                return _allClassesWidget();
+              }
+            },
+          ),
+        )
+      ],
     );
   }
 
@@ -472,7 +473,10 @@ class _ClassesPageState extends State<ClassesPage> {
         },
         itemBuilder: (context, index) {
           final eachClass = filteredClasses[index];
-          return EachClassWidget1(eachClass: eachClass);
+          return EachClassWidget1(
+            eachClass: eachClass,
+            courseModel: eachClass.getCourseModel(courses: allCourses),
+          );
         },
       ),
     );

@@ -7,21 +7,11 @@ import 'package:yogaappcustomer/constants/my_functions.dart';
 import 'package:yogaappcustomer/constants/my_svg_data.dart';
 import 'package:yogaappcustomer/controllers/cart_controller.dart';
 import 'package:yogaappcustomer/controllers/data_controller.dart';
+import 'package:yogaappcustomer/controllers/main_page_controller.dart';
 import 'package:yogaappcustomer/views/classes_page.dart';
 import 'package:yogaappcustomer/views/courses_page.dart';
 import 'package:yogaappcustomer/views/home_page.dart';
-
 import '../utils/route_utils.dart';
-
-enum EnumMainPageTabs{
-  home(label: "Home",iconPath: MySvgData.home),
-  courses(label: "Courses",iconPath: MySvgData.courses),
-  classes(label: "Clases",iconPath: MySvgData.classes),
-  ;
-  final String label;
-  final String iconPath;
-  const EnumMainPageTabs({required this.label,required this.iconPath});
-}
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -33,9 +23,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
 
   DataController dataController = DataController();
-  PageController pageController = PageController();
-  ValueNotifier<EnumMainPageTabs> currentTab = ValueNotifier(EnumMainPageTabs.home);
-  CartController cartController = CartController();
+   CartController cartController = CartController();
+  MainPageController mainPageController = MainPageController();
 
   @override
   void initState() {
@@ -47,15 +36,6 @@ class _MainPageState extends State<MainPage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-  }
-
-  void updateTab({required EnumMainPageTabs tab}){
-    currentTab.value = tab;
-    pageController.animateToPage(
-        EnumMainPageTabs.values.indexOf(tab),
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.linear
-    );
   }
 
   @override
@@ -135,7 +115,7 @@ class _MainPageState extends State<MainPage> {
       ),
       body: PageView.builder(
         itemCount: 3,
-        controller: pageController,
+        controller: mainPageController.pageController,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           switch(index){
@@ -159,12 +139,12 @@ class _MainPageState extends State<MainPage> {
         },
       ),
       bottomNavigationBar: ValueListenableBuilder(
-        valueListenable: currentTab,
+        valueListenable: mainPageController.currentTab,
         builder: (context, currentTab, child) {
           return BottomNavigationBar(
             backgroundColor: MyColors.bgWhite,
             onTap: (value) {
-              updateTab(tab: EnumMainPageTabs.values[value]);
+              mainPageController.updateTab(tab: EnumMainPageTabs.values[value]);
             },
             elevation: 5,
             selectedItemColor: MyColors.primary,

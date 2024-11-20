@@ -142,7 +142,11 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
                   try{
                     final bookingModel = allBookings[index];
                     final classModel = allClasses.firstWhere((element) => element.id.toString() == bookingModel.classId.toString(),);
-                    return EachClassWidget1(eachClass: classModel,isCartButtonIncluded: false,);
+                    return EachClassWidget1(
+                      eachClass: classModel,
+                      isCartButtonIncluded: false,
+                      courseModel: classModel.getCourseModel(courses: allCourses),
+                    );
                   }
                   catch(_){
                     return const SizedBox.shrink();

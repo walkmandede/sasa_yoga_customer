@@ -7,6 +7,7 @@ import 'package:yogaappcustomer/constants/my_functions.dart';
 import 'package:yogaappcustomer/constants/my_svg_data.dart';
 import 'package:yogaappcustomer/controllers/cart_controller.dart';
 import 'package:yogaappcustomer/controllers/data_controller.dart';
+import 'package:yogaappcustomer/controllers/main_page_controller.dart';
 import 'package:yogaappcustomer/models/class_model.dart';
 import 'package:yogaappcustomer/models/course_model.dart';
 import 'package:intl/intl.dart';
@@ -46,7 +47,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> initLoad() async{
 
-    //seeding
     isLoading.value = true;
     await updateData();
     isLoading.value = false;
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
         else{
           return RefreshIndicator(
             onRefresh: () async{
-              await updateData();
+              await initLoad();
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -127,7 +127,8 @@ class _HomePageState extends State<HomePage> {
                 const Spacer(),
                 TextButton.icon(
                   onPressed: () {
-
+                    MainPageController mainPageController = MainPageController();
+                    mainPageController.updateTab(tab: EnumMainPageTabs.courses);
                   },
                   label: Text(
                     "See More",
@@ -330,7 +331,8 @@ class _HomePageState extends State<HomePage> {
                 const Spacer(),
                 TextButton.icon(
                   onPressed: () {
-
+                    MainPageController mainPageController = MainPageController();
+                    mainPageController.updateTab(tab: EnumMainPageTabs.classes);
                   },
                   label: Text(
                     "See More",
@@ -354,7 +356,10 @@ class _HomePageState extends State<HomePage> {
                     left: MyConstants.basePadding,
                     right: MyConstants.basePadding
                   ),
-                  child: EachClassWidget1(eachClass: eachClass,),
+                  child: EachClassWidget1(
+                    eachClass: eachClass,
+                    courseModel: eachClass.getCourseModel(courses: allCourses),
+                  ),
                 );
               },).toList()
             ],

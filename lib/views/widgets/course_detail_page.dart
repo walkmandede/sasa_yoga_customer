@@ -280,7 +280,10 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
             return Column(
               children: [
                 const SizedBox(height: MyConstants.basePadding,),
-                EachClassWidget1(eachClass: eachClass),
+                EachClassWidget1(
+                  eachClass: eachClass,
+                  courseModel: eachClass.getCourseModel(courses: allCourses),
+                ),
               ],
             );
           },

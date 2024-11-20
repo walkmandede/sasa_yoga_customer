@@ -77,7 +77,7 @@ class _CoursesPageState extends State<CoursesPage> {
         else{
           return RefreshIndicator(
             onRefresh: () async{
-              await updateData();
+              await initLoad();
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
