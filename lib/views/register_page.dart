@@ -156,10 +156,10 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
           SizedBox(
-            width: MyFunctions.getMediaQuerySize(context: context).width * 0.5,
+            width: MyFunctions.getMediaQuerySize(context: context).width * 0.25,
             child: FittedBox(
               child: Text(
-                "Join our system\nEnjoy Yoga classes",
+                "Register",
                 style: GoogleFonts.roboto(
                     fontSize: 35,
                     fontWeight: FontWeight.w600,

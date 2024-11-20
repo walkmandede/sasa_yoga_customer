@@ -155,10 +155,10 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           SizedBox(
-            width: MyFunctions.getMediaQuerySize(context: context).width * 0.5,
+            width: MyFunctions.getMediaQuerySize(context: context).width * 0.2,
             child: FittedBox(
               child: Text(
-                "Align. Breathe.\nTransform.",
+                "Login",
                 style: GoogleFonts.roboto(
                     fontSize: 35,
                     fontWeight: FontWeight.w600,
